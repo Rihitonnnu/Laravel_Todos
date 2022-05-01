@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class TodoController extends Controller
 {
@@ -27,7 +30,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('todos.create');
     }
 
     /**
@@ -38,7 +41,20 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            DB::transaction(function() use($request){
+                $e_all=Todo::create([
+                    'name'=>$request->name,
+                    'title'=>$request->title,
+                    'body'=>$request->body,
+                    'created_at'=>Carbon::now(),
+                ]);
+            },2);
+        }catch (\Throwable $e) {
+            Log::error($e);
+            throw $e;
+        }
+        return redirect()->route('todo.index');
     }
 
     /**

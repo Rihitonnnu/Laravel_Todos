@@ -413,6 +413,7 @@
 
             <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
             <a href="{{ route('todo.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Todoリスト一覧へ</a>
+            <a href="{{ route('todo.create') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">タスクの作成</a>
 
             @if (Route::has('register'))
                 <a href="{{ route('register') }}"
